@@ -1,3 +1,9 @@
+plymouth (24.004.60-2deepin3) unstable; urgency=medium
+
+  * fix: Reset message position on two-step type
+
+ -- Liang Bo <liangbo@uniontech.com>  Thu, 26 Jun 2025 15:43:10 +0800
+
 plymouth (24.004.60-2deepin2) unstable; urgency=medium
 
   * fix: Do not overwrite deepin default theme

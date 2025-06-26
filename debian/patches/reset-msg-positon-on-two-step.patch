@@ -1,0 +1,13 @@
+diff --git a/src/plugins/splash/two-step/plugin.c b/src/plugins/splash/two-step/plugin.c
+index 802400a..af4a8df 100644
+--- a/src/plugins/splash/two-step/plugin.c
++++ b/src/plugins/splash/two-step/plugin.c
+@@ -2137,7 +2137,7 @@ view_show_message (view_t     *view,
+ 
+         if (plugin->message_below_animation) {
+                 x = (ply_pixel_display_get_width (view->display) - width) * 0.5;
+-                y = view->animation_bottom + 10;
++                y = (ply_pixel_display_get_height (view->display) - height) * 0.75;
+         } else {
+                 x = 10;
+                 y = 10;
