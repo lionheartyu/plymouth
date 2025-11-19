@@ -1,3 +1,9 @@
+plymouth (24.004.60-2deepin4) unstable; urgency=medium
+
+  * fix: cann't display logo when boot.
+
+ -- xinpeng.wang <wangxinpeng@uniontech.com>  Wed, 19 Nov 2025 11:46:55 +0800
+
 plymouth (24.004.60-2deepin3) unstable; urgency=medium
 
   * fix: Reset message position on two-step type

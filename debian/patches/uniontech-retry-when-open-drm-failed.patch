@@ -1,0 +1,27 @@
+Index: deepin-plymouth/src/plugins/renderers/drm/plugin.c
+===================================================================
+--- deepin-plymouth.orig/src/plugins/renderers/drm/plugin.c	2025-11-19 11:14:26.853872901 +0800
++++ deepin-plymouth/src/plugins/renderers/drm/plugin.c	2025-11-19 11:38:42.394556681 +0800
+@@ -973,9 +973,21 @@
+ {
+         drmVersion *version;
+         int device_fd;
++        int retries = 200, attempt = 0;
++
+ 
+         ply_trace ("Opening '%s'", backend->device_name);
+-        device_fd = open (backend->device_name, O_RDWR);
++        do {
++                device_fd  = open (backend->device_name, O_RDWR);
++                if (device_fd >= 0 || errno != ENOENT)
++                        break;
++
++                if (attempt < retries-1) {
++                        ply_trace ("Device node not ready yet, waiting 5ms...");
++                        usleep(5000);
++                }
++                attempt++;
++        } while (attempt < retries);
+ 
+         if (device_fd < 0) {
+                 ply_trace ("open failed: %m");

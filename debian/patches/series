@@ -8,3 +8,4 @@ ply-boot-splash-Set-unbuffered-input-when-creating-a.patch
 0002-main-Correctly-switch-back-to-text-mode-if-the-splas.patch
 fix-default-plymouth-theme.patch
 reset-msg-positon-on-two-step.patch
+uniontech-retry-when-open-drm-failed.patch
