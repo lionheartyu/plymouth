@@ -15,6 +15,10 @@ logo.opacity_angle = 0;
 
 fun refresh_callback ()
   {
+    Plymouth.Debug("refresh_callback: Window.GetX(): " + Window.GetX());
+    Plymouth.Debug("refresh_callback: Window.GetY(): " + Window.GetY());
+    Plymouth.Debug("refresh_callback: Window.GetWidth(): " + Window.GetWidth());
+    Plymouth.Debug("refresh_callback: Window.GetHeight(): " + Window.GetHeight());
     if (status == "normal")
       {
         logo.opacity_angle += ((2 * 3.14) / 50) * 0.5;  # 0.5 HZ
