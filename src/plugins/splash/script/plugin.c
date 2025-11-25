@@ -257,7 +257,17 @@ start_script_animation (ply_boot_splash_plugin_t *plugin)
         plugin->script_state = script_state_new (plugin);
 
 
-
+// === 打印 uos-ssd-logo.script 读取到的分辨率（安全写法） ===
+for (node = ply_list_get_first_node (plugin->displays);
+     node != NULL;
+     node = ply_list_get_next_node (plugin->displays, node)) {
+    ply_pixel_display_t *display = ply_list_node_get_data (node);
+    unsigned int width = 0, height = 0;
+    ply_pixel_display_get_size(display, &width, &height);
+    fprintf(stderr, "[plymouth] uos-ssd-logo.script resolution: width=%u height=%u\n", width, height);
+    fflush(stderr); // 确保日志及时输出
+}
+// === 打印结束 ===
 
         for (node = ply_list_get_first_node (plugin->script_env_vars);
              node != NULL;
