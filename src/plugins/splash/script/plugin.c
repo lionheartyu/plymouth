@@ -262,8 +262,8 @@ for (node = ply_list_get_first_node (plugin->displays);
      node != NULL;
      node = ply_list_get_next_node (plugin->displays, node)) {
     ply_pixel_display_t *display = ply_list_node_get_data (node);
-    unsigned int width = 0, height = 0;
-    ply_pixel_display_get_size(display, &width, &height);
+    unsigned int width = ply_pixel_display_get_width(display);
+    unsigned int height = ply_pixel_display_get_height(display);
     fprintf(stderr, "[plymouth] uos-ssd-logo.script resolution: width=%u height=%u\n", width, height);
     fflush(stderr); // 确保日志及时输出
 }
