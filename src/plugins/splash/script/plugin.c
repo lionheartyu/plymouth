@@ -257,8 +257,9 @@ start_script_animation (ply_boot_splash_plugin_t *plugin)
         plugin->script_state = script_state_new (plugin);
 
 
-        // === 打印每个物理屏的分辨率 ===
+        // === 打印每个物理屏的分辨率，并分析虚拟大屏 ===
         unsigned int total_width = 0, max_height = 0, display_count = 0;
+        unsigned int first_width = 0, first_height = 0;
         for (node = ply_list_get_first_node (plugin->displays);
              node != NULL;
              node = ply_list_get_next_node (plugin->displays, node)) {
@@ -266,13 +267,30 @@ start_script_animation (ply_boot_splash_plugin_t *plugin)
                 unsigned int width = ply_pixel_display_get_width(display);
                 unsigned int height = ply_pixel_display_get_height(display);
                 ply_trace("uos-ssd-logo.script display[%u]: width=%u height=%u", display_count, width, height);
+                if (display_count == 0) {
+                        first_width = width;
+                        first_height = height;
+                }
                 total_width += width;
                 if (height > max_height)
                         max_height = height;
                 display_count++;
         }
         ply_trace("uos-ssd-logo.script virtual screen: width=%u height=%u", total_width, max_height);
+
+        // 分析LOGO/日志右移的原因
+        if (display_count > 1 && total_width > first_width) {
+                ply_trace("uos-ssd-logo.script LOGO/log may appear shifted right: "
+                          "virtual screen width (%u) > main display width (%u), "
+                          "so centering is based on virtual screen, not main display.",
+                          total_width, first_width);
+        } else {
+                ply_trace("uos-ssd-logo.script LOGO/log centering is normal: "
+                          "virtual screen width (%u) == main display width (%u).",
+                          total_width, first_width);
+        }
         // === 打印结束 ===
+
 
         for (node = ply_list_get_first_node (plugin->script_env_vars);
              node != NULL;
