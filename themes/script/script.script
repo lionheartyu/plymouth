@@ -3,6 +3,12 @@
 Window.SetBackgroundTopColor(0.234, 0.43, 0.705);
 Window.SetBackgroundBottomColor(0.16, 0.25, 0.44);
 
+# 日志调试：打印Plymouth获取的窗口坐标和分辨率
+Plymouth.Debug("Window.GetX(): " + Window.GetX());
+Plymouth.Debug("Window.GetY(): " + Window.GetY());
+Plymouth.Debug("Window.GetWidth(): " + Window.GetWidth());
+Plymouth.Debug("Window.GetHeight(): " + Window.GetHeight());
+
 logo.image = Image("special://logo");
 logo.sprite = Sprite(logo.image);
 logo.opacity_angle = 0;
