@@ -257,16 +257,28 @@ start_script_animation (ply_boot_splash_plugin_t *plugin)
         plugin->script_state = script_state_new (plugin);
 
 
-// === 打印 uos-ssd-logo.script 读取到的分辨率（安全写法） ===
-for (node = ply_list_get_first_node (plugin->displays);
-     node != NULL;
-     node = ply_list_get_next_node (plugin->displays, node)) {
-    ply_pixel_display_t *display = ply_list_node_get_data (node);
-    unsigned int width = ply_pixel_display_get_width(display);
-    unsigned int height = ply_pixel_display_get_height(display);
-    ply_trace("uos-ssd-logo.script resolution: width=%u height=%u", width, height);
-}
-// === 打印结束 ===
+    // === 打印每个物理屏的分辨率和坐标 ===
+    unsigned int total_width = 0, total_height = 0, min_x = 0xFFFFFFFF, min_y = 0xFFFFFFFF, max_x = 0, max_y = 0;
+    for (node = ply_list_get_first_node (plugin->displays);
+         node != NULL;
+         node = ply_list_get_next_node (plugin->displays, node)) {
+        ply_pixel_display_t *display = ply_list_node_get_data (node);
+        unsigned int width = ply_pixel_display_get_width(display);
+        unsigned int height = ply_pixel_display_get_height(display);
+        int x = ply_pixel_display_get_x(display);
+        int y = ply_pixel_display_get_y(display);
+        ply_trace("uos-ssd-logo.script display: x=%d y=%d width=%u height=%u", x, y, width, height);
+
+        if ((unsigned int)x < min_x) min_x = x;
+        if ((unsigned int)y < min_y) min_y = y;
+        if ((unsigned int)(x + width) > max_x) max_x = x + width;
+        if ((unsigned int)(y + height) > max_y) max_y = y + height;
+    }
+    total_width = max_x - min_x;
+    total_height = max_y - min_y;
+    ply_trace("uos-ssd-logo.script virtual screen: width=%u height=%u", total_width, total_height);
+    // === 打印结束 ===
+
 
         for (node = ply_list_get_first_node (plugin->script_env_vars);
              node != NULL;
