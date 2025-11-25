@@ -256,6 +256,18 @@ start_script_animation (ply_boot_splash_plugin_t *plugin)
 
         plugin->script_state = script_state_new (plugin);
 
+
+    // === 打印 uos 脚本读取到的分辨率 ===
+    for (node = ply_list_get_first_node (plugin->displays);
+         node != NULL;
+         node = ply_list_get_next_node (plugin->displays, node)) {
+        ply_pixel_display_t *display = ply_list_node_get_data (node);
+        unsigned int width, height;
+        ply_pixel_display_get_size(display, &width, &height);
+        ply_trace("uos-ssd-logo.script resolution: width=%u height=%u", width, height);
+    }
+    // === 打印结束 ===
+
         for (node = ply_list_get_first_node (plugin->script_env_vars);
              node != NULL;
              node = ply_list_get_next_node (plugin->script_env_vars, node)) {
